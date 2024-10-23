@@ -15,4 +15,4 @@ O objetivo desse trabalho é investigar a presença de vieses em uma rede neural
 ## Execução
 
 - Faça o setup do [gandalf](https://github.com/life-ufes/gandalf) e do [raug](https://github.com/paaatcha/raug) na sua máquina, utilizando Linux ou o WSL. As instruções estão disponíveis no repositório do projeto.
-- No arquivo `config.json`, localizado na pasta `utils`, configure os caminhos até os arquivos do PAD-UFES-20, do MetaBlock, Raug e do checkpoint do modelo treinado.
+- No arquivo `config.json`, localizado na pasta raiz do projeto, configure os caminhos até os arquivos do PAD-UFES-20, do MetaBlock, Raug e do checkpoint do modelo treinado.
