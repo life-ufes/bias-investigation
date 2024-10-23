@@ -8,11 +8,7 @@ O objetivo desse trabalho é investigar a presença de vieses em uma rede neural
 
 ## Estrutura do Repositório
 
-- `data/`: Scripts relacionados ao pré-processamento dos dados e manipulação dos metadados do dataset PAD-UFES-20.
-- `models/`: Implementação dos modelos de Redes Neurais Convolucionais (CNNs) utilizados para a classificação de câncer de pele.
 - `experiments/`: Scripts e notebooks relacionados aos experimentos realizados para a investigação dos vieses.
-- `analysis/`: Scripts para análise estatística e visualização dos resultados, incluindo gráficos que mostram o impacto dos metadados na predição.
-- `notebooks/`: Notebooks Jupyter que documentam as etapas de análise, validação e resultados intermediários do projeto.
 - `utils/`: Funções auxiliares para visualização, carregamento de dados e métricas de avaliação.
 - `results/`: Armazenamento dos resultados das análises, incluindo gráficos, tabelas e outros outputs gerados.
 
