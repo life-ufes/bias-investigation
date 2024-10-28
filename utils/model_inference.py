@@ -183,3 +183,50 @@ def make_inference(model, img, body_region, fitzpatrick, age, gender, smoke, dri
     #     print("-" * 50, "\n")
 
     return pred, pred_label, pred_prob
+
+def make_batch_inference(model, images, metadata_list, batch_size=32, device=None):
+    """
+    Esta função realiza inferências em batch para um conjunto de imagens e metadados.
+
+    :param model: Modelo carregado que será utilizado para inferência.
+    :param images: Lista de imagens PIL a serem avaliadas.
+    :param metadata_list: Lista de dicionários de metadados para cada imagem.
+    :param batch_size: Tamanho do lote para a inferência.
+    :param device: Dispositivo a ser usado ('cuda' ou 'cpu').
+    :return: Lista de previsões para cada imagem.
+    """
+
+    # Definir o dispositivo
+    if device is None:
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # Configurar o modelo para o modo de avaliação e movê-lo para o dispositivo
+    model.eval()
+    model.to(device)
+
+    # Configurar a transformação de imagem usada durante o treinamento
+    _trans = ImgEvalTransform()
+
+    predictions = []
+
+    # Fazer inferência em lotes
+    with torch.no_grad():
+        for i in range(0, len(images), batch_size):
+            batch_images = images[i:i+batch_size]
+            batch_metadata = metadata_list[i:i+batch_size]
+
+            # Transformar imagens e preparar metadados para o modelo
+            imgs_tensor = torch.stack([_trans(img) for img in batch_images]).to(device)
+            metadata_tensor = torch.tensor([list(meta.values()) for meta in batch_metadata], dtype=torch.float).to(device)
+
+            # Fazer a inferência com o modelo
+            batch_preds = model(imgs_tensor, metadata_tensor)
+
+            # Aplicar softmax para obter as probabilidades e movê-las para a CPU
+            batch_preds = torch.nn.functional.softmax(batch_preds, dim=1).cpu().numpy()
+
+            # Adicionar as previsões ao resultado final
+            predictions.extend(batch_preds)
+
+    return predictions
+
