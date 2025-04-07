@@ -1,1 +1,6 @@
 utils/__pycache__/
+results/gradcam_images/
+results/gradcam_gifs/
+results/metadata_impact_plots/
+
+.vscode/
